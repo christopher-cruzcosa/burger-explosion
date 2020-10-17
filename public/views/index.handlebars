@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-6">
+        <ul>
+            {{#each burgers}}
+                {{#dataValues}}
+                    {{#unless devoured}}
+                        {{> notDevoured/notDevoured}}
+                    {{/unless}}
+                {{/dataValues}}
+            {{/each}}
+        </ul>
+
+    </div>
+    <div class="col-6">
+        <ul>
+            {{#each burgers}}
+                {{#dataValues}}
+                    {{#if devoured}}
+                        {{> devoured/devoured}}
+                    {{/if}}
+                {{/dataValues}}
+            {{/each}}
+        </ul>
+
+    </div>
+</div>
