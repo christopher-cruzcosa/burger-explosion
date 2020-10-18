@@ -18,8 +18,10 @@ router.post("/api/new", (req, res) => {
     const newBurger = req.body;
     console.log(newBurger);
 
-    db.burger.create({ name: newBurger.name, devoured: newBurger.devoured }, (result) => {
-        res.json({ id: result.insertId })
+    db.burger.create({ name: newBurger.name, devoured: newBurger.devoured }).then((burgerCreate) => {
+        console.log("new post");
+        const SEE_OTHER_STATUS_CODE = 303;
+        return res.end();
     })
     .catch((err) => {
         console.log(err);
@@ -27,19 +29,20 @@ router.post("/api/new", (req, res) => {
 });
 
 router.put("/api/:id", (req, res) => {
-    console.log(req.params.id);
-    console.log(parseInt(req.params.id));
     const condition = { where: {id: req.params.id} };
-    console.log(req.body.value);
     const update = { devoured:req.body.value};
 
-    db.burger.update(update, condition, (result) => {
-        if (result.affectedRows === 0) {
-            // If no rows were affected, then the ID must not exist, so 404
+    db.burger.update(update, condition).then((burgerChange) => {
+        if (burgerChange.affectedRows === 0) {
             return res.status(404).end();
-        }
-        res.status(200).end();
+        };
+        console.log("new put");
+        const SEE_OTHER_STATUS_CODE = 303;
+        return res.json(req.params.id).end();
     })
+    .catch((err) => {
+        console.log(err);
+    });
     
 });
 
