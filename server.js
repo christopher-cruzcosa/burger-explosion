@@ -17,6 +17,7 @@ app.set("view engine", "handlebars");
 app.set('views', path.join(__dirname, "public/views"));
 
 app.use(routes);
+app.use(express.static("public"));
 
 db.sequelize.sync().then(() => {
     app.listen(PORT, () => {
