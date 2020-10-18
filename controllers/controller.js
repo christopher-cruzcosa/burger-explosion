@@ -1,7 +1,9 @@
+//dependencies
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
 
+//main page load route
 router.get("/", (req, res) => {
     db.burger.findAll().then((data) => {
         const hbsObject = {
@@ -14,6 +16,7 @@ router.get("/", (req, res) => {
     });
 });
 
+//Api route to get save a new burger order to the DB
 router.post("/api/new", (req, res) => {
     const newBurger = req.body;
     console.log(newBurger);
@@ -28,6 +31,7 @@ router.post("/api/new", (req, res) => {
     });
 });
 
+//Api route to change a selected burger order from notDevoured to devoured
 router.put("/api/:id", (req, res) => {
     const condition = { where: {id: req.params.id} };
     const update = { devoured:req.body.value};
